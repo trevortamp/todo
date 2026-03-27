@@ -1,12 +1,21 @@
-<title>Todo List</title>
 <html>
 <head>
-<h1>Todo List</h1>
+  <link rel="stylesheet" href="style.css">
+  <title>Todo List</title>
 </head>
 <body>
-	<input type="TODO" name="new task">
-	<button onclick="addTask()">Add Task</button>
-	<ul id="list"></ul>
-	<button onclick="clearAll()">Clear All</button>
+  <div class="kast">
+	<h1>Todo List</h1>
+  
+  <input type="text" id="task" placeholder="New task">
+  <button onclick="addTask()">Add Task</button>
+
+  <ul id="list"></ul>
+
+  <button onclick="clearAll()">Clear All</button>
+  </div>
+
+
+  <script src="script.js"></script>
 </body>
 </html>
