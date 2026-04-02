@@ -1,16 +1,59 @@
 body {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    background-color: beige;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+  font-family: Arial;
+  background: #f4f4f4;
 }
 
-.kast {
-    background-color: brown;
-    padding: 20px;
-    border-radius: 10px;
-    width: 300px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+/* Layout */
+.app {
+  width: 400px;
+  margin: 50px auto;
 }
+
+/* Hidden toggle */
+.hidden {
+  display: none;
+}
+
+/* Boxes */
+.login-box,
+.chat-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Messages */
+.messages {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+/* Individual message */
+.message {
+  margin: 5px 0;
+}
+
+/* Username part */
+.message-username {
+  font-weight: bold;
+}
+
+/* Input area */
+.input-area {
+  display: flex;
+}
+
+.input {
+  flex: 1;
+  padding: 10px;
+}
+
+.btn {
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* 👇 Customize everything above however you want */

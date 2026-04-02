@@ -1,30 +1,70 @@
-let tasks = [];
+const loginBox = document.getElementById("loginBox");
+const chatBox = document.getElementById("chatBox");
+const messagesDiv = document.getElementById("messages");
 
-function displayTasks() {
-  let html = "";
-  for (let i = 0; i < tasks.length; i++) {
-    html += "<li>" + tasks[i] +
-      "<button onclick='removeTask(" + i + ")'>x</button></li>";
-  }
-  document.getElementById("list").innerHTML = html;
+let username = localStorage.getItem("username");
+
+// Auto login if username exists
+if (username) {
+  showChat();
 }
 
-function addTask() {
-  let taskInput = document.getElementById("task");
-  let text = taskInput.value;
-  if (text === "") return;
+function login() {
+  const input = document.getElementById("usernameInput");
+  username = input.value.trim();
 
-  tasks.push(text);
-  taskInput.value = "";
-  displayTasks();
+  if (!username) return;
+
+  localStorage.setItem("username", username);
+  showChat();
 }
 
-function removeTask(i) {
-  tasks.splice(i, 1);
-  displayTasks();
+function showChat() {
+  loginBox.classList.add("hidden");
+  chatBox.classList.remove("hidden");
+  loadMessages();
 }
 
-function clearAll() {
-  tasks = [];
-  displayTasks();
+function loadMessages() {
+  const messages = JSON.parse(localStorage.getItem("chat")) || [];
+
+  messagesDiv.innerHTML = "";
+
+  messages.forEach(msg => {
+    const div = document.createElement("div");
+    div.className = "message";
+
+    div.innerHTML = `
+      <span class="message-username">${msg.user}:</span>
+      <span class="message-text">${msg.text}</span>
+    `;
+
+    messagesDiv.appendChild(div);
+  });
+
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function sendMessage() {
+  const input = document.getElementById("messageInput");
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  const messages = JSON.parse(localStorage.getItem("chat")) || [];
+
+  messages.push({
+    user: username,
+    text: text
+  });
+
+  localStorage.setItem("chat", JSON.stringify(messages));
+
+  input.value = "";
+  loadMessages();
+
+  function logout() {
+  localStorage.removeItem("username");
+  location.reload();
+}
 }
