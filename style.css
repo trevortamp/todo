@@ -1,0 +1,56 @@
+body {
+  font-family: Arial;
+  background: #f4f4f4;
+}
+
+
+.app {
+  width: 400px;
+  margin: 50px auto;
+}
+
+
+
+
+
+.login-box,
+.chat-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+
+.messages {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+
+.message {
+  margin: 5px 0;
+}
+
+
+.message-username {
+  font-weight: bold;
+}
+
+
+.input-area {
+  display: flex;
+}
+
+.input {
+  flex: 1;
+  padding: 10px;
+}
+
+.btn {
+  padding: 10px;
+  cursor: pointer;
+}
+
