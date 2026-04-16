@@ -5,9 +5,7 @@ const messagesDiv = document.getElementById("messages");
 let username = localStorage.getItem("username");
 
 // Auto login if username exists
-if (username) {
-  showChat();
-}
+
 
 function login() {
   const input = document.getElementById("usernameInput");
@@ -62,9 +60,4 @@ function sendMessage() {
 
   input.value = "";
   loadMessages();
-
-  function logout() {
-  localStorage.removeItem("username");
-  location.reload();
-}
 }
