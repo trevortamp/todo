@@ -1,63 +1,47 @@
-const loginBox = document.getElementById("loginBox");
-const chatBox = document.getElementById("chatBox");
-const messagesDiv = document.getElementById("messages");
+let nimi = "";
 
-let username = localStorage.getItem("username");
-
-// Auto login if username exists
-
-
-function login() {
-  const input = document.getElementById("usernameInput");
-  username = input.value.trim();
-
-  if (!username) return;
-
-  localStorage.setItem("username", username);
-  showChat();
+while (nimi === "" || nimi === null) {
+    nimi = prompt("Sisesta nimi:");
 }
 
-function showChat() {
-  loginBox.classList.add("hidden");
-  chatBox.classList.remove("hidden");
-  loadMessages();
+const url = "https://tinkr.tech/sdb/db/db";
+const sein = document.getElementById("sein");
+const nupp = document.getElementById("nupp");
+const sisend = document.getElementById("sisend");
+
+function laeAndmed() {
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            sein.innerHTML = "";
+            data.forEach(item => {
+                const p = document.createElement("p");
+                p.innerHTML = `<strong>${item.autor}:</strong> ${item.tekst}`;
+                sein.appendChild(p);
+            });
+        });
 }
 
-function loadMessages() {
-  const messages = JSON.parse(localStorage.getItem("chat")) || [];
+function chati() {
+    if (sisend.value === "") return;
 
-  messagesDiv.innerHTML = "";
+    const chat = {
+        autor: nimi,
+        tekst: sisend.value
+    };
 
-  messages.forEach(msg => {
-    const div = document.createElement("div");
-    div.className = "message";
-
-    div.innerHTML = `
-      <span class="message-username">${msg.user}:</span>
-      <span class="message-text">${msg.text}</span>
-    `;
-
-    messagesDiv.appendChild(div);
-  });
-
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(chat)
+    })
+    .then(() => {
+        sisend.value = "";
+        laeAndmed();
+    });
 }
 
-function sendMessage() {
-  const input = document.getElementById("messageInput");
-  const text = input.value.trim();
-
-  if (!text) return;
-
-  const messages = JSON.parse(localStorage.getItem("chat")) || [];
-
-  messages.push({
-    user: username,
-    text: text
-  });
-
-  localStorage.setItem("chat", JSON.stringify(messages));
-
-  input.value = "";
-  loadMessages();
-}
+nupp.addEventListener("click", chati);
+laeAndmed();
