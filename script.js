@@ -1,31 +1,36 @@
-let nimi = "";
+let nimi = prompt("Sisesta nimi:");
 
-while (nimi === "" || nimi === null) {
+while (nimi == "" || nimi == null) {
     nimi = prompt("Sisesta nimi:");
 }
 
-const url = "https://tinkr.tech/sdb/db/db";
-const sein = document.getElementById("sein");
-const nupp = document.getElementById("nupp");
-const sisend = document.getElementById("sisend");
+let url = "https://tinkr.tech/sdb/db/db";
 
-function laeAndmed() {
-    fetch(url)
-        .then(res => res.json())
-        .then(data => {
-            sein.innerHTML = "";
-            data.forEach(item => {
-                const p = document.createElement("p");
-                p.innerHTML = `<strong>${item.autor}:</strong> ${item.tekst}`;
-                sein.appendChild(p);
-            });
-        });
-}
+let sein = document.getElementById("sein");
+let nupp = document.getElementById("nupp");
+let sisend = document.getElementById("sisend");
 
-function chati() {
-    if (sisend.value === "") return;
+fetch(url)
+    .then(function(res) {
+        return res.json();
+    })
+    .then(function(data) {
 
-    const chat = {
+        for (let sonum of data) {
+            let p = document.createElement("p");
+            p.textContent = sonum.autor + ": " + sonum.tekst;
+            sein.appendChild(p);
+        }
+
+    });
+
+nupp.onclick = function() {
+
+    if (sisend.value == "") {
+        return;
+    }
+
+    let uusSonum = {
         autor: nimi,
         tekst: sisend.value
     };
@@ -35,13 +40,12 @@ function chati() {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(chat)
-    })
-    .then(() => {
-        sisend.value = "";
-        laeAndmed();
+        body: JSON.stringify(uusSonum)
     });
-}
 
-nupp.addEventListener("click", chati);
-laeAndmed();
+    let p = document.createElement("p");
+    p.textContent = nimi + ": " + sisend.value;
+    sein.appendChild(p);
+
+    sisend.value = "";
+};
